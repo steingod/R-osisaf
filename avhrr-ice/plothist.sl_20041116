@@ -1,0 +1,62 @@
+#
+# PROGRAMMING LANGUAGE:
+# S-language (for use in R)
+#
+# FUNCTION NAME:
+# plothist.sl
+#
+# PURPOSE:
+# To read a ASCII file containing collocated data and plot the histogram.
+#
+# NOTES:
+# NA
+#
+# BUGS:
+# NA
+#
+# AUTHOR:
+# Øystein Godøy, DNMI/FOU, 13/06/2001
+# MODIFIED:
+# Øystein Godøy, DNMI/FOU, 03/11/2001
+# Changed basepath...
+#
+function(file = "ice_mar00_c.txt",feature="CH1") {
+    #basepath <- "/raid1/sat/fase/SAF/res_anabase"
+    basepath <- "/disk2/SAGOB/saf"
+    file2open <- paste(basepath,file,sep="/")
+    dm <- read.table(file2open,header=F,skip=5)
+
+    SuZ <- dm[,1]
+    SaZ <- dm[,2]
+    SuA <- dm[,3]
+    SaA <- dm[,4]
+    CH1 <- dm[,5]
+    CH2 <- dm[,6]
+    CH3 <- dm[,7]
+    CH4 <- dm[,8]
+    CH5 <- dm[,9]
+    len <- length(CH1)
+
+    CH1[CH3 < 200.0] <- NA
+    CH1[CH4 < 200.0] <- NA
+    CH1[CH5 < 200.0] <- NA
+    SuZ[is.na(CH1)] <- NA
+    SaZ[is.na(CH1)] <- NA
+    SuA[is.na(CH1)] <- NA
+    SaA[is.na(CH1)] <- NA
+    CH2[is.na(CH1)] <- NA
+    CH3[is.na(CH1)] <- NA 
+    CH4[is.na(CH1)] <- NA
+    CH5[is.na(CH1)] <- NA
+
+    CH1N <- CH1/cos(SuZ*pi/180.0)
+    CH2N <- CH2/cos(SuZ*pi/180.0)
+    CH21 <- CH2/CH1
+    CH34 <- CH3 - CH4
+    CH34N <- CH34/cos(SuZ*pi/180.0)
+    CH45 <- CH4 - CH5
+    RAZ <- SaA - SuA
+
+    par(pty="s")
+    hist(CH1N,col="blue", probability=TRUE)
+}
