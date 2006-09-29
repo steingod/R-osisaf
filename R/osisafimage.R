@@ -1,0 +1,42 @@
+osisafimage <- function(dataset, map=FALSE) {
+
+    if (missing(dataset)) {
+	cat("Remember to provide an object from readosisaf.\n")
+	return;
+    }
+
+    eastings <- dataset$header$ucs_ul_x+
+	(dataset$header$ucs_dx*(0:(dataset$header$xsize-1)))
+    northings <- dataset$header$ucs_ul_y-
+	(dataset$header$ucs_dy*(0:(dataset$header$ysize-1)))
+
+    eastings <- sort(eastings)
+    northings <- sort(northings)
+
+
+    t <- matrix(dataset$data,
+	    ncol=dataset$header$ysize,nrow=dataset$header$xsize)
+
+    aspectratio <- dataset$header$ysize/dataset$header$xsize
+    par(fin=c(5,5*aspectratio))
+
+    ##image(eastings,northings,t[,dataset$header$ysize:1])
+
+    if (map==TRUE) {
+	data(osisafmapdata)
+        mapdata <- latlon2ucs(osisafmapdata$lat,osisafmapdata$lon)
+        ##lines(mapdata$eastings,mapdata$northing)
+	filled.contour(eastings,northings,t[,dataset$header$ysize:1],
+		asp=aspectratio,
+		plot.axes={axis(1);axis(2);
+		lines(mapdata$eastings,mapdata$northing)},
+		color.palette=topo.colors)
+    } else {
+	filled.contour(eastings,northings,t[,dataset$header$ysize:1],
+		asp=aspectratio,color.palette=topo.colors)
+    }
+    
+    title(paste("Ocean and Sea Ice SAF",dataset$header$description),
+    sub=paste(dataset$header$year,dataset$header$month,dataset$header$day,sep="-"))
+
+}
