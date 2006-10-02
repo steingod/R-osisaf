@@ -1,0 +1,5 @@
+This directory contains functions that yet not have been generalised and
+implemented within the package structure. This is an ongoing process and
+this directory is NOT part of the osisaf R-package!
+
+Øystein Godøy, METNO/FOU, 02.10.2006 
