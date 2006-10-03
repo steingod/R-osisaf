@@ -28,7 +28,7 @@ compHLLMLflux(basepath,experiment)
 \seealso{\link{}}
 
 \author{
-    Ã˜ystein GodÃ¸y (\email{o.godoy@met.no})
+    Øystein Godøy (\email{o.godoy@met.no})
 }
 \note{
 Not finished

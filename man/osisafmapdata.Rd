@@ -46,8 +46,8 @@
 }
 
 \references{
-    Wessel, P., and W. H. F. Smith, A Global Self-consistent,
-    Hierarchical, High-resolution Shoreline Database, J. Geophys. Res.,
+    Wessel, P., and W. H. F. Smith, \cite{A Global Self-consistent,
+    Hierarchical, High-resolution Shoreline Database}, J. Geophys. Res.,
     101, #B4, pp.  8741-8743, 1996. 
 }
 

@@ -24,7 +24,7 @@ Imports: \tab \cr
 Suggests: \tab \cr
 License: \tab GPL version 2 or newer\cr
 URL: \tab http://www.r-project.org, http://saf.met.no\cr
-Built: \tab R 2.3.1; i686-redhat-linux-gnu; 2006-09-29 21:57:27; unix\cr
+Built: \tab R 2.3.1; i686-redhat-linux-gnu; 2006-10-02 12:10:01; unix\cr
 }
 
 Index:
@@ -32,18 +32,25 @@ Index:
 compHLLMLflux           Compare HL and LML radiative fluxes
 compprocchains          Compare EUMETSAT OSISAF products from two
                         different processing chains
-latlon2ucs              convert between geographical and UCS
+gammacheck              Plotting of three parameter Gamma distribution
+gammapdf                Three parameter Gamma distribution
+latlon2ucs              Convert between geographical and UCS
                         coordinates
 mondailyssi             Analyse and plot daily EUMETSAT OSISAF SSI
                         validation data
 monhourlyssi            Analyse and plot hourly EUMETSAT OSISAF SSI
                         validation data
+monthnameconvert        Convert month specification in filenames
+normalpdfest            Estimate the probability density function for a
+                        Normal distribution
 osisaf-package          Useful functions for handling EUMETSAT Ocean
-                        and Sea Ice SAF data ~~ package title ~~
+                        and Sea Ice SAF data
 osisafimage             Create image of EUMETSAT OSISAF products
 osisafmapdata           GSHHS Low Resolution Coastlines
+readSAGOB               Read ASCII files containing satellite for
+                        specific situations observations
 readosisaf              Read EUMETSAT OSISAF products
-ucs2latlon              convert between UCS and geographical
+ucs2latlon              Convert between UCS and geographical
                         coordinates
 }
 }
@@ -53,5 +60,10 @@ ucs2latlon              convert between UCS and geographical
 Maintainer: Øystein Godøy <o.godoy@met.no>
 }
 \references{
-\url{http://saf.met.no}, \url{http://www.osi-saf.org/}
+\url{http://www.osi-saf.org/}, \url{http://saf.met.no/}
+}
+\keyword{ package }
+\seealso{
+}
+\examples{
 }

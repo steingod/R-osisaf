@@ -27,7 +27,7 @@ and metadata.
 \seealso{\link{ucs2latlon}}
 
 \author{
-    Ã˜ystein GodÃ¸y (\email{o.godoy@met.no})
+    Øystein Godøy (\email{o.godoy@met.no})
 }
 \note{
 }
