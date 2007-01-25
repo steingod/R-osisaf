@@ -17,8 +17,8 @@ utilised by the development team.
 \details{
 \tabular{ll}{
 Package: \tab osisaf\cr
-Version: \tab 0.1\cr
-Date: \tab 2006-04-26\cr
+Version: \tab 0.2\cr
+Date: \tab 2007-01-24\cr
 Depends: \tab \cr
 Imports: \tab \cr
 Suggests: \tab \cr
@@ -34,6 +34,7 @@ compprocchains          Compare EUMETSAT OSISAF products from two
                         different processing chains
 gammacheck              Plotting of three parameter Gamma distribution
 gammapdf                Three parameter Gamma distribution
+getVACclass             Extract data for a specific class
 latlon2ucs              Convert between geographical and UCS
                         coordinates
 mondailyssi             Analyse and plot daily EUMETSAT OSISAF SSI
@@ -49,7 +50,10 @@ osisafimage             Create image of EUMETSAT OSISAF products
 osisafmapdata           GSHHS Low Resolution Coastlines
 readSAGOB               Read ASCII files containing satellite for
                         specific situations observations
+readVAC                 Read ASCII files containing satellite data for
+                        specific situations/surfaces
 readosisaf              Read EUMETSAT OSISAF products
+solzencorrect           Correct data for solar zenith angle
 ucs2latlon              Convert between UCS and geographical
                         coordinates
 }
