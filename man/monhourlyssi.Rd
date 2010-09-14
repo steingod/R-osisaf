@@ -11,11 +11,11 @@
     plotted for validation purposes.
 }
 \usage{
-monhourlyssi(basedir,method="S",area="a",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
+monhourlyssi(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 }
 
 \arguments{
-    \item{basedir}{path to collocation files with conformant names}
+    \item{file}{collocation file to read}
     \item{method}{specification of which methods that are available for
     analysis. The methods currently implemented are scatter plot (S),
     scatterplot for clear sky (SC), scatterplot for overcast (SO),
@@ -35,8 +35,6 @@ monhourlyssi(basedir,method="S",area="a",printIt=FALSE,thc=1.1,tho=1.9,sat="a")
     available for this choice and finally the NWCSAF cloudtype can be
     plotted agains the measurement of minutes of direct insolation at
     the station (STCC).}
-    \item{area}{either \bold{ns}, \bold{nr} or \bold{a}, the latter use
-    all available data}
     \item{thc}{threshold value for clear sky according to NWCSAF PPS
     cloudtype}
     \item{tho}{threshold value for overcast sky according to NWCSAF PPS

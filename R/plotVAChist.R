@@ -1,3 +1,8 @@
+#
+# I do not know whether this works yet!!!
+#
+# ID: $Id: plotVAChist.R,v 1.2 2010-09-14 08:40:20 steingod Exp $
+#
 plotVAChist <- function(vac, classes=c("CLOUD","SEA","ICE"), 
 	feature="T4", ploline=FALSE, solarcorrect=TRUE, returnhist=FALSE, ...) {
 
@@ -14,8 +19,7 @@ plotVAChist <- function(vac, classes=c("CLOUD","SEA","ICE"),
 		    R21=u[,"A2"]/u[,"A1"],
 		    R31=u[,"A3"]/u[,"A1"],
 		    D45=u[,"T4"]-u[,"T5"],
-		    D34=u[,"T3"]-u[,"T4"],
-		    D45=u[,"T3"]-u[,"T4"])
+		    D34=u[,"T3"]-u[,"T4"])
 	} else {
 	    v <- u[,feature]
 	}

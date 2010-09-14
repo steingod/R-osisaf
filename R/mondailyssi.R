@@ -27,12 +27,14 @@
 # Øystein Godøy, met.no/FOU, 04.05.2004
 # Modified placement of statistcs in plot...
 #
+# ID: $Id: mondailyssi.R,v 1.2 2010-09-14 08:40:20 steingod Exp $
+#
 mondailyssi <- function(filename, method="S",printIt=FALSE) {
 
     #basedir <- "/disk2/OSI_HL_data/output/flux/ssi/daily/"
     #myfile <- paste(basedir,"qc_list_daily.txt",sep="")
     mydata <- read.table(filename,
-	col.names=c("T.sat","StId","OBS","EST"),
+	col.names=c("T.sat","EST","NSAT","StId","OBS"),
 	na.strings="-999.99"
     )
 

@@ -58,38 +58,20 @@
 # Øystein Godøy, met.no/FOU, 13.05.2004
 # Added DTSOO, and changed how cloud information is handled (now between 1
 # and 2).
+# Øystein Godøy, METNO/FOU, 13.09.2010: Removed path specification and
+# filename generation and use direct filenames instead. Also changed the
+# order of variables in collocation file due to changes in fluxval_hour.
 #
-monhourlyssi <- function(basedir,method="S",area="a",printIt=FALSE,thc=1.1,tho=1.9,sat="a") {
+# ID: $Id: monhourlyssi.R,v 1.2 2010-09-14 08:40:20 steingod Exp $
+#
+monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") {
 
-    #thc <- 2
-    #tho <- 4
-
-    # Read data
-    #basedir <- "/disk2/OSI_HL_data/output/flux/ssi/product/"
-    if (area=="ns" || area=="nr") {
-	myfile <- paste(basedir,"ssiqc_list_",area,".txt",sep="")
-	mydata <- read.table(myfile,
-	    col.names=
-	    c("T.sat","T.obs","StId","TTM","OBS","ST","EST","NVAL","N",
-	    "SAT","SOZ","SAZ","RAZ","CM"),
-	    na.strings="-999.00")
-    } else if (area=="a") {
-	myfile <- paste(basedir,"ssiqc_list_ns.txt",sep="")
-	mydata1 <- read.table(myfile,
-	    col.names=
-	    c("T.sat","T.obs","StId","TTM","OBS","ST","EST","NVAL","N",
-	    "SAT","SOZ","SAZ","RAZ","CM"),
-	    na.strings="-999.00")
-	myfile <- paste(basedir,"ssiqc_list_nr.txt",sep="")
-	mydata2 <- read.table(myfile,
-	    col.names=
-	    c("T.sat","T.obs","StId","TTM","OBS","ST","EST","NVAL","N",
-	    "SAT","SOZ","SAZ","RAZ","CM"),
-	    na.strings="-999.00")
-	mydata <- rbind(mydata1, mydata2)
-    } else {
-	return("Area was not specified!")
-    }
+    myfile <- file
+    mydata <- read.table(myfile,
+            col.names=
+            c("T.sat","EST","NVAL","N","SAT","SOZ","SAZ","RAZ","CM",
+                "T.obs","StId","TTM","OBS","ST"),
+            na.strings="-999.00")
 
     if (printIt==TRUE) {
 	postscript(paper="special",width=8,height=8,onefile=F,horizontal=F)
