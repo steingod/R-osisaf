@@ -14,10 +14,11 @@
 # BUGS:
 #
 # AUTHOR:
-# Øystein Godøy, METNO/FOU, 18.05.2006 
+# Ã˜ystein GodÃ¸y, METNO/FOU, 18.05.2006 
 #
 # MODIFIED:
 # NA 
+#
 
 compprocchains <- function(chain1,chain2,
 	from=ISOdate(1996,1,1),to=Sys.time(),area=NULL) {
@@ -26,12 +27,14 @@ compprocchains <- function(chain1,chain2,
     
     if (any(grep("dli",chain1))) {
 	myylab <- "Differences of means [W/m^2]"
-	myproduct <- ""
+	myproduct <- "DLI"
     } else if (any(grep("ssi",chain1))) {
 	myylab <- "Differences of means [W/m^2]"
-    } else if (any(grep("sst",chain1))) {
+	myproduct <- "SSI"
+   } else if (any(grep("sst",chain1))) {
 	myylab <- "Differences of means [K]"
-    } else if (any(grep("ice",chain1))) {
+	myproduct <- "SST"
+   } else if (any(grep("ice",chain1))) {
 	if (any(grep("conc",chain1))) {
 	    myylab <- "Differences of means [%]"
 	    myproduct <- "Sea Ice Concentration"
@@ -49,16 +52,18 @@ compprocchains <- function(chain1,chain2,
 	cat("Could not determine product type.\n")
 	return(NULL)
     }
-    mysubtitle <- paste("Time period:",from,"to",to)
+    mysubtitle <- paste(myproduct,"between",from,"-",to)
 
     mvalues <- numeric()
     mtimes_tmp <-vector()
 
-
     for (fname in list1) {
 	fname1 <- paste(chain1,fname,sep="/")
 	fname2 <- paste(chain2,fname,sep="/")
-	if (length(grep("hdf",fname1,fixed=TRUE))==0) {
+	if (length(grep("hdf5",fname1,fixed=TRUE))==0) {
+	    next
+	}
+	if (length(grep("hdf5",fname2,fixed=TRUE))==0) {
 	    next
 	}
 	if (! is.null(area)) {
@@ -75,13 +80,16 @@ compprocchains <- function(chain1,chain2,
 	    cat(paste("Skipping file:",fname,", too new\n"))
 	    next
 	}
-	if (!file.exists(fname1)) {
+	if (file.access(fname1)) {
 	    next
 	}
-	if (!file.exists(fname2)) {
+	if (file.access(fname2)) {
 	    next
 	}
+        cat(paste("Reading\n\t",fname1,"\nand\n\t",fname2,"\n"))
+        cat("\t")
 	d1 <- readosisaf(file=fname1)
+        cat("\t")
 	d2 <- readosisaf(file=fname2)
 	timeid1 <- ISOdatetime(d1$header$year,d1$header$month,
 		d1$header$day,d1$header$hour,d1$header$minute,0,"GMT")
@@ -90,10 +98,16 @@ compprocchains <- function(chain1,chain2,
 	if (difftime(timeid1,timeid2,units="secs") != 0) {
 	    next
 	}
+        mean1 <- mean(d1$data,na.rm=T)
+        mean2 <- mean(d2$data,na.rm=T)
+        if (is.na(mean1) && is.na(mean2)) {
+            next
+        }
 
-	mvalues[length(mvalues)+1] <- mean(d1$data,na.rm=T)-mean(d2$data,na.rm=T)
-	mtimes_tmp[length(mtimes_tmp)+1] <- timeid1
+	mvalues[length(mvalues)+1] <- mean1-mean2
+        mtimes_tmp[length(mtimes_tmp)+1] <- timeid1
     }
+    cat("All products are collected now, preparing results and plots\n")
 
     mtimes <- ISOdatetime(1970,1,1,0,0,0)+mtimes_tmp
 

@@ -1,7 +1,7 @@
 readosisaf <- function(filename,nomiss=TRUE) {
 
     if (missing(filename)) {
-	cat("Husk at filnavn må oppgis...\n")
+	cat("Remember to specify filename\n")
 	return;
     }
     

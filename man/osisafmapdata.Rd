@@ -1,6 +1,5 @@
-
 \name{osisafmapdata}
-\doctype{data}
+\docType{data}
 \alias{osisafmapdata}
 
 \title{GSHHS Low Resolution Coastlines}

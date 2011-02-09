@@ -17,9 +17,10 @@
 # processing and more...
 #
 # AUTHOR:
-# Øystein Godøy, DNMI/FOU, 20.01.2004
+# Ã˜ystein GodÃ¸y, DNMI/FOU, 20.01.2004
+#
 # MODIFIED:
-# Øystein Godøy, DNMI/FOU, 27.01.2004
+# Ã˜ystein GodÃ¸y, DNMI/FOU, 27.01.2004
 # Temporary fix to base weights on surface clear sky irradiance instead of
 # TOA irradiance. At present only climatological values are used, this
 # will have to be fixed...

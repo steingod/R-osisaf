@@ -1,11 +1,5 @@
-
-\name{
-    plotVAChist
-}
-
-\alias{
-    plotVAChist
-}
+\name{plotVAChist}
+\alias{plotVAChist}
 
 \title{
     Plot histogram of VAC data for specific classes and features

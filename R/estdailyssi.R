@@ -18,12 +18,12 @@
 # processing and more...
 #
 # AUTHOR:
-# Øystein Godøy, DNMI/FOU, 21/11/2001
+# Ã˜ystein GodÃ¸y, DNMI/FOU, 21/11/2001
 # MODIFIED:
-# Øystein Godøy, DNMI/FOU, 27.06.2003
+# Ã˜ystein GodÃ¸y, DNMI/FOU, 27.06.2003
 # Added equation of time...
-# Øystein Godøy, DNMI/FOU, 27.01.2004
-# Øystein Godøy, DNMI/FOU, 18.02.2004
+# Ã˜ystein GodÃ¸y, DNMI/FOU, 27.01.2004
+# Ã˜ystein GodÃ¸y, DNMI/FOU, 18.02.2004
 # Modified Equation of Time. See equationoftime.sl for details.
 #
 function(mode=TRUE,clim=TRUE,dev=devgfissi,obs=obsgfissi,pos="GFI",esttz="UTC",s0sat=TRUE,plotit=TRUE) {
@@ -261,7 +261,7 @@ function(mode=TRUE,clim=TRUE,dev=devgfissi,obs=obsgfissi,pos="GFI",esttz="UTC",s
     nest <- tapply(wessi,factor(doy),length)
 
     if (mode) {
-	cat("Statistikk:\n")
+	cat("Statistics:\n")
 	cat(paste("\t Bias:",mean(meanobs-meanest,na.rm=T),"\n"))
 	cat(paste("\tStDev:",sd(meanobs-meanest,na.rm=T),"\n"))
 	cat(paste("\t RMSD:",sqrt(mean((meanobs-meanest)^2.,na.rm=T)),"\n"))
@@ -270,7 +270,7 @@ function(mode=TRUE,clim=TRUE,dev=devgfissi,obs=obsgfissi,pos="GFI",esttz="UTC",s
 	    plot(meanobs-meanest,xlab="Day of year");abline(h=0)
 	    
 	    title(pos)
-	    cat("Velg øvre høyre hjørne...\n")
+	    cat("Select upper right corner for legend\n")
 	    text(locator(),
 		paste(
 		" Bias:",round(mean(meanobs-meanest,na.rm=T),d=2),
@@ -287,7 +287,7 @@ function(mode=TRUE,clim=TRUE,dev=devgfissi,obs=obsgfissi,pos="GFI",esttz="UTC",s
 	nmo <- meanobs[i]
 	meanobs <- nmo
 
-	cat("Statistikk:\n")
+	cat("Statistics:\n")
 	cat(paste("\t Bias:",round(mean(meanobs-meanest,na.rm=T),d=2),"\n"))
 	cat(paste("\tStDev:",round(sd(meanobs-meanest,na.rm=T),d=2),"\n"))
 	cat(paste("\t RMSD:",round(sqrt(mean((meanobs-meanest)^2.,na.rm=T)),
@@ -297,7 +297,7 @@ function(mode=TRUE,clim=TRUE,dev=devgfissi,obs=obsgfissi,pos="GFI",esttz="UTC",s
 	    plot(i,meanobs-meanest,xlab="Day of year");abline(h=0)
 	    
 	    title(pos)
-	    cat("Velg øvre høyre hjørne...\n")
+	    cat("Select upper right corner for legend\n")
 	    text(locator(),
 		paste(
 		" Bias:",round(mean(meanobs-meanest,na.rm=T),d=2),

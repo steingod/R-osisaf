@@ -40,6 +40,10 @@ compprocchains(chain1,chain2,from=ISOdate(1996,1,1),to=Sys.time(),area=NULL)
 \note{
     This function is probably of most interest to the development team
     when performing software updates.
+
+    \bold{This function has sometimes proven buggy, requiring a restart of
+    R. The most plausible reason is a memory bug when reading HDF5 files,
+    but this is yet undetected. Results shown are correct.}
 }
 \seealso{\link{readosisaf}}
 

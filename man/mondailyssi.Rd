@@ -18,7 +18,7 @@ mondailyssi(filename, method="S",printIt=FALSE)
     \item{filename}{collocation file to read}
     \item{method}{specification of which methods that are available for
     analysis. The methods currently implemented are scatter plot (S),
-    difference plot by time (D), and boxplots for observation sites.}
+    difference plot by time (D), and boxplots for observation sites (POS).}
     \item{printIt}{print to default printer}
 }
 \value{None}

@@ -26,8 +26,10 @@
 # Added RMS and mean observed to difference method...
 # Øystein Godøy, met.no/FOU, 04.05.2004
 # Modified placement of statistcs in plot...
+# Øystein Godøy, METNO/FOU, 22.11.2010
+# Modified output.
 #
-# ID: $Id: mondailyssi.R,v 1.2 2010-09-14 08:40:20 steingod Exp $
+# ID: $Id: mondailyssi.R,v 1.3 2011-02-09 11:18:27 steingod Exp $
 #
 mondailyssi <- function(filename, method="S",printIt=FALSE) {
 
@@ -53,13 +55,15 @@ mondailyssi <- function(filename, method="S",printIt=FALSE) {
 	mystr1 <- paste("Mean obs.:",
 	    formatC(mean(xdata,na.rm=T),format="f",digits=2),
 	    "N:",formatC(length(xdata),format="d"))
-	mystr2 <- paste("Bias:",
+	mystr2 <- paste("Mean est.:",
+	    formatC(mean(ydata,na.rm=T),format="f",digits=2),
+	    "N:",formatC(length(ydata),format="d"))
+	mystr3 <- paste("Bias:",
 	    formatC(mean(xdata-ydata,na.rm=T),format="f",digits=2))
-	mystr3 <- paste("RMSD:",
+	mystr4 <- paste("RMSD:",
 	    formatC(sqrt(mean((xdata-ydata)^2,na.rm=T)),format="f",digits=2))
-	mystr4 <- paste("Standard dev.:",
+	mystr5 <- paste("Standard dev.:",
 	    formatC(sd(xdata-ydata,na.rm=T),format="f",digits=2))
-	mystr5 <- paste("N:",length(ydata))
 	mystr<-paste(mystr1,mystr2,mystr3,mystr4,mystr5,sep="\n")
 	text(min(xdata,na.rm=T),max(ydata,na.rm=T),adj=c(0,1),mystr)
     } else if (method=="D") {
@@ -74,18 +78,18 @@ mondailyssi <- function(filename, method="S",printIt=FALSE) {
 	plot(xdata,ydata,
 	    ylab="Observed-Estimated [W/m^2]")
 	abline(0,0)
-	#myreg <- lm(ydata~xdata)
-	#plot.lm(myreg)
 	mystr1 <- paste("Mean Obs.:",
 	    formatC(mean(mydata[,"OBS"],na.rm=T),format="f",digits=2))
-	mystr2 <- paste("Bias:",
+	mystr2 <- paste("Mean Est.:",
+	    formatC(mean(mydata[,"Est"],na.rm=T),format="f",digits=2))
+	mystr3 <- paste("Bias:",
 	    formatC(mean(ydata,na.rm=T),format="f",digits=2))
-	mystr3 <- paste("RMSD:",
+	mystr4 <- paste("RMSD:",
 	    formatC(sqrt(mean(ydata^2,na.rm=T)),format="f",digits=2))
-	mystr4 <- paste("Standard dev.:",
+	mystr5 <- paste("Standard dev.:",
 	    formatC(sd(ydata,na.rm=T),format="f",digits=2))
-	mystr5 <- paste("N:",length(ydata))
-	mystr<-paste(mystr1,mystr2,mystr3,mystr4,mystr5,sep="\n")
+	mystr6 <- paste("N:",length(ydata))
+	mystr<-paste(mystr1,mystr2,mystr3,mystr4,mystr5,mystr6,sep="\n")
 	text(xdata[1],max(ydata,na.rm=T),adj=c(0,1),mystr)
     } else if (method=="POS") {
 	boxplot((mydata[,"OBS"]-mydata[,"EST"]) ~ mydata[,"StId"],

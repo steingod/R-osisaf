@@ -21,7 +21,7 @@
 # BUGS:
 #
 # AUTHOR:
-# Øystein Godøy, met.no/FOU, 15.07.2004
+# Ã˜ystein GodÃ¸y, met.no/FOU, 15.07.2004
 #
 # MODIFIED:
 # NA
