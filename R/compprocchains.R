@@ -55,6 +55,8 @@ compprocchains <- function(chain1,chain2,
     mysubtitle <- paste(myproduct,"between",from,"-",to)
 
     mvalues <- numeric()
+    meanvec1 <- numeric()
+    meanvec2 <- numeric()
     mtimes_tmp <-vector()
 
     for (fname in list1) {
@@ -80,10 +82,10 @@ compprocchains <- function(chain1,chain2,
 	    cat(paste("Skipping file:",fname,", too new\n"))
 	    next
 	}
-	if (file.access(fname1)) {
+	if (file.access(fname1, mode=4)) {
 	    next
 	}
-	if (file.access(fname2)) {
+	if (file.access(fname2, mode=4)) {
 	    next
 	}
         cat(paste("Reading\n\t",fname1,"\nand\n\t",fname2,"\n"))
@@ -105,6 +107,8 @@ compprocchains <- function(chain1,chain2,
         }
 
 	mvalues[length(mvalues)+1] <- mean1-mean2
+	meanvec1[length(meanvec1)+1] <- mean1
+	meanvec2[length(meanvec2)+1] <- mean2
         mtimes_tmp[length(mtimes_tmp)+1] <- timeid1
     }
     cat("All products are collected now, preparing results and plots\n")
@@ -115,5 +119,5 @@ compprocchains <- function(chain1,chain2,
     abline(h=0)
     title("Difference plot between first and second chain",sub=mysubtitle)
 
-    return(data.frame(time=mtimes,data=mvalues))
+    return(data.frame(time=mtimes,diff=mvalues, mean1=meanvec1, mean2=meanvec2))
 }
