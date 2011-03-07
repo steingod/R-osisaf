@@ -62,7 +62,7 @@
 # filename generation and use direct filenames instead. Also changed the
 # order of variables in collocation file due to changes in fluxval_hour.
 #
-# ID: $Id: monhourlyssi.R,v 1.2 2010-09-14 08:40:20 steingod Exp $
+# ID: $Id: monhourlyssi.R,v 1.3 2011-03-07 11:10:04 steingod Exp $
 #
 monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") {
 
@@ -182,6 +182,24 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	plot(mydata[,"SAT"],mydata[,"OBS"]-mydata[,"EST"],
 	    xlab="Satellite",ylab="Observed-Estimated [W/m^2]",type="p")
 	abline(0,0)
+	mystr15 <- paste("NOAA-15 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="NOAA-15","OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-15","EST"],na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="NOAA-15","OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-15","EST"],na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="NOAA-15","OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-15","EST"],na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="NOAA-15","OBS"])
+	)
 	mystr16 <- paste("NOAA-16 | Mean:",
 	    formatC(mean(
 		mydata[mydata[,"SAT"]=="NOAA-16","OBS"]
@@ -218,7 +236,25 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	    "N:",
 	    length(mydata[mydata[,"SAT"]=="NOAA-17","OBS"])
 	)
-	mystr<-paste(mystr16,mystr17,sep="\n")
+	mystr18 <- paste("NOAA-18 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="NOAA-18","OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-18","EST"],na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="NOAA-18","OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-18","EST"],na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="NOAA-18","OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-18","EST"],na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="NOAA-18","OBS"])
+	)
+	mystr<-paste(mystr15,mystr16,mystr17,mystr18,sep="\n")
 	text(0.5, min(mydata[,"OBS"]-mydata[,"EST"],na.rm=T),adj=c(0,0),mystr)
 	title("All situations")
     } else if (method=="DSATO") { # Overcast
@@ -226,6 +262,27 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	    mydata[mydata[,"ST"]==0,"OBS"]-mydata[mydata[,"ST"]==0,"EST"],
 	    xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
 	abline(0,0)
+	mystr15 <- paste("NOAA-15 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==0,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==0,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==0,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==0,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==0,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==0,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==0,"OBS"])
+	)
 	mystr16 <- paste("NOAA-16 | Mean:",
 	    formatC(mean(
 		mydata[mydata[,"SAT"]=="NOAA-16"&mydata[,"ST"]==0,"OBS"]
@@ -268,7 +325,28 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	    "N:",
 	    length(mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0,"OBS"])
 	)
-	mystr <- paste(mystr16,mystr17,sep="\n")
+	mystr18 <- paste("NOAA-18 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"OBS"])
+	)
+	mystr <- paste(mystr15,mystr16,mystr17,mystr18,sep="\n")
 	text(0.5, min(mydata[mydata[,"ST"]==0,"OBS"]-
 	    mydata[mydata[,"ST"]==0,"EST"],na.rm=T),adj=c(0,0),mystr)
 	title("Overcast situations only (ST=0)")
@@ -277,6 +355,27 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	    mydata[mydata[,"ST"]==60,"OBS"]-mydata[mydata[,"ST"]==60,"EST"],
 	    xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
 	abline(0,0)
+	mystr15 <- paste("NOAA-15 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60,"OBS"])
+	)
 	mystr16 <- paste("NOAA-16 | Mean:",
 	    formatC(mean(
 		mydata[mydata[,"SAT"]=="NOAA-16"&mydata[,"ST"]==60,"OBS"]
@@ -319,7 +418,28 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	    "N:",
 	    length(mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60,"OBS"])
 	)
-	mystr <- paste(mystr16,mystr17,sep="\n")
+	mystr18 <- paste("NOAA-18 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60,"OBS"])
+	)
+	mystr <- paste(mystr15,mystr16,mystr17,mystr18,sep="\n")
 	text(0.5, min(mydata[mydata[,"ST"]==60,"OBS"]
 	    -mydata[mydata[,"ST"]==60,"EST"],na.rm=T),adj=c(0,0),mystr)
 	title("Clear sky situations only (ST=60)")
@@ -329,6 +449,28 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 		-mydata[mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],
 	    xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
 	abline(0,0)
+	mystr15 <- paste("NOAA-15 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==0&
+		mydata[,"CM"]>tho,"OBS"]-mydata[mydata[,"SAT"]=="NOAA-15"&
+		mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==0&
+		mydata[,"CM"]>tho,"OBS"]-mydata[mydata[,"SAT"]=="NOAA-15"&
+		mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==0&
+		mydata[,"CM"]>tho,"OBS"]-mydata[mydata[,"SAT"]=="NOAA-15"&
+		mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==0&
+		mydata[,"CM"]>tho,"OBS"])
+	)
 	mystr16 <- paste("NOAA-16 | Mean:",
 	    formatC(mean(
 		mydata[mydata[,"SAT"]=="NOAA-16"&mydata[,"ST"]==0&
@@ -373,7 +515,29 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	    length(mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0&
 		mydata[,"CM"]>tho,"OBS"])
 	)
-	mystr<-paste(mystr16,mystr17,sep="\n")
+	mystr18 <- paste("NOAA-18 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0&
+		mydata[,"CM"]>tho,"OBS"]-mydata[mydata[,"SAT"]=="NOAA-18"&
+		mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0&
+		mydata[,"CM"]>tho,"OBS"]-mydata[mydata[,"SAT"]=="NOAA-18"&
+		mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0&
+		mydata[,"CM"]>tho,"OBS"]-mydata[mydata[,"SAT"]=="NOAA-18"&
+		mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0&
+		mydata[,"CM"]>tho,"OBS"])
+	)
+	mystr<-paste(mystr15,mystr16,mystr17,mystr18,sep="\n")
 	text(0.5, min(mydata[mydata[,"ST"]==0&mydata[,"CM"]>tho,"OBS"]-
 	    mydata[mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
 	    adj=c(0,0),mystr)
@@ -386,6 +550,31 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	    mydata[,"ST"]==60&mydata[,"CM"]<thc,"EST"],
 	    xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
 	abline(0,0)
+	mystr15 <- paste("NOAA-15 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60&
+		mydata[,"CM"]<thc,"OBS"]-
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60&
+		mydata[,"CM"]<thc,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60&
+		mydata[,"CM"]<thc,"OBS"]-
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60&
+		mydata[,"CM"]<thc,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60&
+		mydata[,"CM"]<thc,"OBS"]-
+		mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60&
+		mydata[,"CM"]<thc,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="NOAA-15"&mydata[,"ST"]==60&
+	    mydata[,"CM"]<thc&mydata[,"CM"]>0,"OBS"])
+	)
 	mystr16 <- paste("NOAA-16 | Mean:",
 	    formatC(mean(
 		mydata[mydata[,"SAT"]=="NOAA-16"&mydata[,"ST"]==60&
@@ -436,7 +625,32 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	    length(mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60&
 	    mydata[,"CM"]<thc,"OBS"])
 	)
-	mystr<-paste(mystr16,mystr17,sep="\n")
+	mystr18 <- paste("NOAA-18 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60&
+		mydata[,"CM"]<thc,"OBS"]-
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60&
+		mydata[,"CM"]<thc,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60&
+		mydata[,"CM"]<thc,"OBS"]-
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60&
+		mydata[,"CM"]<thc,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60&
+		mydata[,"CM"]<thc,"OBS"]-
+		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60&
+		mydata[,"CM"]<thc,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60&
+	    mydata[,"CM"]<thc&mydata[,"CM"]>0,"OBS"])
+	)
+	mystr<-paste(mystra15,mystr16,mystr17,mystr18,sep="\n")
 	text(0.5, min(mydata[mydata[,"ST"]==60&mydata[,"CM"]<thc&
 	    mydata[,"CM"]>0,"OBS"]-mydata[mydata[,"ST"]==60&mydata[,"CM"]<thc&
 	    mydata[,"CM"]>0,"EST"],na.rm=T),adj=c(0,0),mystr)
