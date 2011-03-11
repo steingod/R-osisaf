@@ -53,6 +53,7 @@ readSAGOB               Read ASCII files containing satellite for
 readVAC                 Read ASCII files containing satellite data for
                         specific situations/surfaces
 readosisaf              Read EUMETSAT OSISAF products
+readhourlyssival        Read validation results for hourly SSI
 solzencorrect           Correct data for solar zenith angle
 ucs2latlon              Convert between UCS and geographical
                         coordinates

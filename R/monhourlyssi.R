@@ -62,7 +62,7 @@
 # filename generation and use direct filenames instead. Also changed the
 # order of variables in collocation file due to changes in fluxval_hour.
 #
-# ID: $Id: monhourlyssi.R,v 1.3 2011-03-07 11:10:04 steingod Exp $
+# ID: $Id: monhourlyssi.R,v 1.4 2011-03-11 08:45:12 steingod Exp $
 #
 monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") {
 
@@ -650,7 +650,7 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	    length(mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60&
 	    mydata[,"CM"]<thc&mydata[,"CM"]>0,"OBS"])
 	)
-	mystr<-paste(mystra15,mystr16,mystr17,mystr18,sep="\n")
+	mystr<-paste(mystr15,mystr16,mystr17,mystr18,sep="\n")
 	text(0.5, min(mydata[mydata[,"ST"]==60&mydata[,"CM"]<thc&
 	    mydata[,"CM"]>0,"OBS"]-mydata[mydata[,"ST"]==60&mydata[,"CM"]<thc&
 	    mydata[,"CM"]>0,"EST"],na.rm=T),adj=c(0,0),mystr)
@@ -715,6 +715,7 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	boxplot((mydata[,"OBS"]-mydata[,"EST"]) ~ mydata[,"StId"],
 	    xlab="Station",ylab="Observed-Estimated [W/m^2]",
 	    type="p",las=2)
+        abline(h=0)
 	title("All")
     } else if (method=="POSC") {
 	boxplot((mydata[mydata[,"ST"]==60,"OBS"]-
