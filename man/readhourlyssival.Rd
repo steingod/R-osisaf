@@ -1,6 +1,6 @@
 \name{readhourlyssival}
 
-\alias{ }
+\alias{readhourlyssival}
 
 \title{
     Read hourly SSI validation data
