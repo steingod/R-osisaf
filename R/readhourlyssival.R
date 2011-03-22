@@ -28,11 +28,11 @@
 # NA
 #
 # CVS_ID:
-# $Id: readhourlyssival.R,v 1.1 2011-03-11 08:45:12 steingod Exp $
+# $Id: readhourlyssival.R,v 1.2 2011-03-22 09:24:16 steingod Exp $
 #
 readhourlyssival <- function(file) {
 
-    mydata <- read.table(myfile,
+    mydata <- read.table(file,
             col.names=
             c("T.sat","EST","NVAL","N","SAT","SOZ","SAZ","RAZ","CM",
                 "T.obs","StId","TTM","OBS","ST"),
