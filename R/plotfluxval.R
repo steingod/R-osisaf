@@ -30,7 +30,7 @@
 # NA
 #
 # CVS_ID:
-# $Id: plotfluxval.R,v 1.2 2011-03-22 14:33:22 steingod Exp $
+# $Id: plotfluxval.R,v 1.3 2011-03-22 15:19:05 steingod Exp $
 #
 
 plotfluxval <- function(x) {
@@ -52,7 +52,7 @@ plotfluxval <- function(x) {
     for (mykey1 in mystations) {
         for (mykey2 in mymonths) {
             if (length(myres2[myres2[,1]==mykey1&myres2[,2]==mykey2,3])>0){ 
-            myres3[match(mykey2,myres3),mykey1] <- myres2[myres2[,1]==mykey1&myres2[,2]==mykey2,3]
+            myres3[match(mykey2,myres3),mykey1] <- unclass(myres2[myres2[,1]==mykey1&myres2[,2]==mykey2,3])
             }
         }
     }
@@ -64,7 +64,9 @@ plotfluxval <- function(x) {
     axis.POSIXct(1,myres3[,1],at=myres3[,1],labels=strftime(myres3[,1],"%Y-%m"),las=1,cex.axis=0.8)
     title("Bias Observed-Estimated")
     abline(h=0)
-    legend(locator(),legend=mystations,pch=1:length(mystations),col=1:length(mystations),lty=1:length(mystations))
+    #legend(locator(),legend=mystations,pch=1:length(mystations),col=1:length(mystations),lty=1:length(mystations))
+    length(mystations)
+    legend(min(myres3[,1]),max(tmp[,2:length(mystations)],na.rm=T),legend=mystations,pch=1:length(mystations),col=1:length(mystations),lty=1:length(mystations),cex=0.8)
 
     return(myres3)
 }
