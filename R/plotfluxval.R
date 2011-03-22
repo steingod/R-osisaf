@@ -30,7 +30,7 @@
 # NA
 #
 # CVS_ID:
-# $Id: plotfluxval.R,v 1.1 2011-03-22 09:24:16 steingod Exp $
+# $Id: plotfluxval.R,v 1.2 2011-03-22 14:33:22 steingod Exp $
 #
 
 plotfluxval <- function(x) {
@@ -61,7 +61,7 @@ plotfluxval <- function(x) {
     myres3[,1] <- as.numeric(strptime(paste(mymonths,"15",sep=""),"%Y%m%d"))
     matplot(myres3[,1],myres3[,2:length(mystations)], type="b",
     ylab="OBS-EST (W/m²)",xlab="",xaxt="n",pch=1:length(mystations))
-    axis.POSIXct(1,myres3[,1])
+    axis.POSIXct(1,myres3[,1],at=myres3[,1],labels=strftime(myres3[,1],"%Y-%m"),las=1,cex.axis=0.8)
     title("Bias Observed-Estimated")
     abline(h=0)
     legend(locator(),legend=mystations,pch=1:length(mystations),col=1:length(mystations),lty=1:length(mystations))
