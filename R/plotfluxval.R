@@ -30,7 +30,7 @@
 # Øystein Godøy, METNO/FOU, 2011-04-01: Added plotting functionality.
 #
 # CVS_ID:
-# $Id: plotfluxval.R,v 1.4 2011-04-01 20:19:11 steingod Exp $
+# $Id: plotfluxval.R,v 1.5 2011-04-01 22:39:01 steingod Exp $
 #
 
 plotfluxval <- function(x,parameter="bias") {
@@ -39,38 +39,75 @@ plotfluxval <- function(x,parameter="bias") {
 
     mytime <- strptime(x$T.sat,"%Y%m%d%H%M")
     myfactor <- factor(paste(x$StId,strftime(mytime,"%Y%m"),sep=" "))
+    myylim <- NULL
     
     if (parameter=="bias") {
         myparam <- x$OBS-x$EST
         mytitle <- "Mean bias between observed and estimated"
         myylab <- "W/m²"
-        myres <- tapply(myparam,myfactor,mean)
+        myres <- procdata(myparam,myfactor)
     } else if (parameter=="meanobs") {
         myparam <- x$OBS
         mytitle <- "Mean observed irradiance"
         myylab <- "W/m²"
-        myres <- tapply(myparam,myfactor,mean)
-    } else if (parameter=="meanrelerr") {
-        myparam <- (x$EST-x$OBS)*100/x$OBS
+        myres <- procdata(myparam,myfactor)
+    } else if (parameter=="relbias") {
         mytitle <- "Mean error in % of observed irradiance"
         myylab <- "%"
+        myres1 <- procdata(x$OBS,myfactor)
+        myres2 <- procdata(x$OBS-x$EST,myfactor)
+        myres <- list()
+        myres$mystations <- myres1$mystations
+        tmp <- (myres2$data[,2:(length(myres$mystations)+1)]*100)/myres1$data[,2:(length(myres1$mystations)+1)]
+        myres$data <- cbind(myres1$data[,1],tmp)
+        myylim <- c(-30,30)
     } else {
         return("Requested parameter not supported")
     }
 
+    matplot(myres$data[,1],myres$data[,2:(length(myres$mystations)+1)],
+    type="p", ylab=myylab,xlab="",xaxt="n",pch=1:length(myres$mystations),
+    ylim=myylim)
+    axis.POSIXct(1,myres$data[,1],at=myres$data[,1],labels=strftime(myres$data[,1],"%Y-%m"),las=1,cex.axis=0.8)
+    if (parameter=="bias") {
+        abline(h=0)
+    } else if (parameter=="relbias") {
+        abline(h=c(-10,0,10), lty=c(2,1,2))
+    }
+    length(myres$mystations)
+    xpos <- min(myres$data[,1])
+    xpos2 <- max(myres$data[,1]) 
+    if (parameter=="relbias") {
+        ypos <- 30
+    } else {
+        ypos <- max(myres$data[,2:(length(myres$mystations)+1)],na.rm=T)
+    }
+    legend(xpos,ypos,legend=myres$mystations,pch=1:length(myres$mystations),col=1:length(myres$mystations),cex=0.6)
+    text(xpos2,ypos, pos=2, labels=mytitle, cex=0.8)
+    tmp <- myres$data[,2:(length(myres$mystations)+1)]
+    lines(myres$data[,1],rowMeans(tmp,na.rm=T),type="b",lwd=3,
+    pch=(length(myres$mystations)+1))
+
+    return(myres)
+}
+
+procdata <- function(x, myfactor, action="mean") {
+
+    myres <- tapply(x,myfactor,mean)
+
     tmp <- strsplit(as.character(names(myres)),split=" ")
     mykeys <- matrix(unlist(tmp), ncol=2, byrow=T)
-    myres2 <- cbind(mykeys,myres)
+    tmp <- cbind(mykeys,myres)
 
-    mymonths <- sort(unique(myres2[,2]))
-    mystations <- unique(myres2[,1])
+    mymonths <- sort(unique(tmp[,2]))
+    mystations <- unique(tmp[,1])
     myres3 <- matrix(nrow=length(mymonths),ncol=length(mystations)+1)
     myres3[,1] <- mymonths
     colnames(myres3) <- c("Time",mystations)
     for (mykey1 in mystations) {
         for (mykey2 in mymonths) {
-            if (length(myres2[myres2[,1]==mykey1&myres2[,2]==mykey2,3])>0){ 
-                myres3[match(mykey2,myres3),mykey1] <- unclass(myres2[myres2[,1]==mykey1&myres2[,2]==mykey2,3])
+            if (length(tmp[tmp[,1]==mykey1&tmp[,2]==mykey2,3])>0){ 
+                myres3[match(mykey2,myres3),mykey1] <- unclass(tmp[tmp[,1]==mykey1&tmp[,2]==mykey2,3])
             }
         }
     }
@@ -78,20 +115,6 @@ plotfluxval <- function(x,parameter="bias") {
     myres3 <- as.data.frame(tmp)
     myres3[,1] <- as.numeric(strptime(paste(mymonths,"15",sep=""),"%Y%m%d"))
     myres3[,2:(length(mystations)+1)] <- data.matrix(myres3[,2:(length(mystations)+1)])
-    matplot(myres3[,1],myres3[,2:(length(mystations)+1)], type="p",
-    ylab=myylab,xlab="",xaxt="n",pch=1:length(mystations))
-    axis.POSIXct(1,myres3[,1],at=myres3[,1],labels=strftime(myres3[,1],"%Y-%m"),las=1,cex.axis=0.8)
-    #title("Bias Observed-Estimated")
-    if (parameter=="bias") {
-        abline(h=0)
-    }
-    length(mystations)
-    legend(min(myres3[,1]),max(myres3[,2:(length(mystations)+1)],na.rm=T),legend=mystations,pch=1:length(mystations),col=1:length(mystations),cex=0.8)
-    text(max(myres3[,1]),max(myres3[,2:(length(mystations)+1)],na.rm=T),
-    pos=2, labels=mytitle, cex=0.8)
-    ##legend(min(myres3[,1]),max(myres3[,2:(length(mystations)+1)],na.rm=T),legend=mystations,pch=1:length(mystations),col=1:length(mystations),lty=1:length(mystations),cex=0.8)
-    tmp <- myres3[,2:(length(mystations)+1)]
-    lines(myres3[,1],rowMeans(tmp,na.rm=T),type="b",lwd=3, pch=(length(mystations)+1))
 
-    return(myres3)
+    return(list(data=myres3,mystations=mystations))
 }
