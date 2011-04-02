@@ -30,7 +30,7 @@
 # Øystein Godøy, METNO/FOU, 2011-04-01: Added plotting functionality.
 #
 # CVS_ID:
-# $Id: plotfluxval.R,v 1.5 2011-04-01 22:39:01 steingod Exp $
+# $Id: plotfluxval.R,v 1.6 2011-04-02 13:36:16 steingod Exp $
 #
 
 plotfluxval <- function(x,parameter="bias") {
@@ -58,9 +58,27 @@ plotfluxval <- function(x,parameter="bias") {
         myres2 <- procdata(x$OBS-x$EST,myfactor)
         myres <- list()
         myres$mystations <- myres1$mystations
-        tmp <- (myres2$data[,2:(length(myres$mystations)+1)]*100)/myres1$data[,2:(length(myres1$mystations)+1)]
-        myres$data <- cbind(myres1$data[,1],tmp)
-        myylim <- c(-30,30)
+        tmp <- abs((myres2$data[,2:(length(myres$mystations)+1)]*100)/myres1$data[,2:(length(myres1$mystations)+1)])
+        myres$data <- cbind(time=myres1$data[,1],tmp)
+        myylim <- c(0,50)
+    } else if (parameter=="biassdev") {
+        myparam <- x$OBS-x$EST
+        mytitle <- "Standard deviation of mean bias"
+        myylab <- "W/m²"
+        myres <- procdata(myparam,myfactor,action="sdev")
+    } else if (parameter=="relbiassdev") {
+        mytitle <- "Mean bias standard deviation in % of mean observation"
+        myylab <- "%"
+        myres1 <- procdata(x$OBS,myfactor)
+        myres2 <- procdata(x$OBS-x$EST,myfactor,action="sdev")
+        myres <- list()
+        myres$mystations <- myres1$mystations
+        tmp <- abs((myres2$data[,2:(length(myres$mystations)+1)]*100)/myres1$data[,2:(length(myres1$mystations)+1)])
+        myres$data <- cbind(time=myres1$data[,1],tmp)
+    } else if (parameter=="nobs") {
+        mytitle <- "Numbber of cases per station"
+        myylab <- "#"
+        myres <- procdata(NULL,myfactor,action="nobs")
     } else {
         return("Requested parameter not supported")
     }
@@ -72,20 +90,22 @@ plotfluxval <- function(x,parameter="bias") {
     if (parameter=="bias") {
         abline(h=0)
     } else if (parameter=="relbias") {
-        abline(h=c(-10,0,10), lty=c(2,1,2))
+        abline(h=c(0,10), lty=c(1,2))
     }
     length(myres$mystations)
     xpos <- min(myres$data[,1])
     xpos2 <- max(myres$data[,1]) 
     if (parameter=="relbias") {
-        ypos <- 30
+        ypos <- 50
     } else {
         ypos <- max(myres$data[,2:(length(myres$mystations)+1)],na.rm=T)
     }
     legend(xpos,ypos,legend=myres$mystations,pch=1:length(myres$mystations),col=1:length(myres$mystations),cex=0.6)
     text(xpos2,ypos, pos=2, labels=mytitle, cex=0.8)
     tmp <- myres$data[,2:(length(myres$mystations)+1)]
-    lines(myres$data[,1],rowMeans(tmp,na.rm=T),type="b",lwd=3,
+    myrowmeans <- rowMeans(tmp,na.rm=T)
+    myres$data$rmean <- myrowmeans
+    lines(myres$data[,1],myrowmeans,type="b",lwd=3,
     pch=(length(myres$mystations)+1))
 
     return(myres)
@@ -93,7 +113,15 @@ plotfluxval <- function(x,parameter="bias") {
 
 procdata <- function(x, myfactor, action="mean") {
 
-    myres <- tapply(x,myfactor,mean)
+    if (action=="sdev") {
+        myres <- tapply(x,myfactor,sd,na.rm=T)
+    } else if (action=="mean") {
+        myres <- tapply(x,myfactor,mean,na.rm=T)
+    } else if (action=="nobs") {
+        myres <- table(myfactor)
+    } else {
+        return("Action not supported")
+    }
 
     tmp <- strsplit(as.character(names(myres)),split=" ")
     mykeys <- matrix(unlist(tmp), ncol=2, byrow=T)

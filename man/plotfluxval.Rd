@@ -12,17 +12,19 @@
 }
 
 \usage{
-    plotfluxval(x)
+    plotfluxval(x,parameter="bias")
 }
 
 \arguments{
     \item{x}{a validation object of the type returned by
     \link{readhourlyssival}}
+    \item{parameter}{valid values are "bias", "meanobs", "relbias",
+    "biassdev", "relbiassdev" and "nobs"}
 }
 
 \value{
-    Returns a \link{data.frame} containing monthly validation data for the
-    individual staions used.
+    Returns a \link{list} containing monthly validation data for the
+    individual stations used as well as the names of the stations.
 }
 
 \seealso{
