@@ -62,22 +62,33 @@
 # filename generation and use direct filenames instead. Also changed the
 # order of variables in collocation file due to changes in fluxval_hour.
 #
-# ID: $Id: monhourlyssi.R,v 1.4 2011-03-11 08:45:12 steingod Exp $
+# ID: $Id: monhourlyssi.R,v 1.5 2011-04-07 09:49:58 steingod Exp $
 #
-monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") {
+monhourlyssi <-
+function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk") {
 
     myfile <- file
-    mydata <- read.table(myfile,
-            col.names=
-            c("T.sat","EST","NVAL","N","SAT","SOZ","SAZ","RAZ","CM",
-                "T.obs","StId","TTM","OBS","ST"),
-            na.strings="-999.00")
+        if (format=="compact") {
+            mydata <- read.table(myfile,
+                col.names=
+                c("T.sat","EST","NVAL","N","SAT","SOZ","SAZ","RAZ","CM",
+                    "T.obs","StId","OBS"),
+                na.strings="-999.00")
+        } else {
+            mydata <- read.table(myfile,
+                col.names=
+                c("T.sat","EST","NVAL","N","SAT","SOZ","SAZ","RAZ","CM",
+                    "T.obs","StId","TTM","OBS","ST"),
+                na.strings="-999.00")
+        }
 
     if (printIt==TRUE) {
 	postscript(paper="special",width=8,height=8,onefile=F,horizontal=F)
     }
 
     par(pty="s")
+
+    myres <- NULL
 
     # Plot data
     if (method=="S") {
@@ -712,13 +723,13 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	text(min(myindex),
 	    min(mydata[,"OBS"]-mydata[,"EST"],na.rm=T),adj=c(0,0),mystr)
     } else if (method=="POS") {
-	boxplot((mydata[,"OBS"]-mydata[,"EST"]) ~ mydata[,"StId"],
+	myres <- boxplot((mydata[,"OBS"]-mydata[,"EST"]) ~ mydata[,"StId"],
 	    xlab="Station",ylab="Observed-Estimated [W/m^2]",
 	    type="p",las=2)
         abline(h=0)
 	title("All")
     } else if (method=="POSC") {
-	boxplot((mydata[mydata[,"ST"]==60,"OBS"]-
+	myres <- boxplot((mydata[mydata[,"ST"]==60,"OBS"]-
 	    mydata[mydata[,"ST"]==60,"EST"]) ~ 
 	    mydata[mydata[,"ST"]==60,"StId"],
 	    xlab="Station",ylab="Observed-Estimated [W/m^2]",
@@ -726,7 +737,7 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	abline(h=0)
 	title("Cloudfree")
     } else if (method=="POSCC") {
-	boxplot((mydata[mydata[,"ST"]==60&mydata[,"CM"]<thc,"OBS"]-
+	myres <- boxplot((mydata[mydata[,"ST"]==60&mydata[,"CM"]<thc,"OBS"]-
 	    mydata[mydata[,"ST"]==60&mydata[,"CM"]<thc,"EST"]) ~ 
 	    mydata[mydata[,"ST"]==60&mydata[,"CM"]<thc,"StId"],
 	    xlab="Station",ylab="Observed-Estimated [W/m^2]",
@@ -734,7 +745,7 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	abline(h=0)
 	title("Cloudfree (both)")
     } else if (method=="POSO") {
-	boxplot((mydata[mydata[,"ST"]==0,"OBS"]-
+	myres <- boxplot((mydata[mydata[,"ST"]==0,"OBS"]-
 	    mydata[mydata[,"ST"]==0,"EST"]) ~ 
 	    mydata[mydata[,"ST"]==0,"StId"],
 	    xlab="Station",ylab="Observed-Estimated [W/m^2]",
@@ -742,7 +753,7 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
 	abline(h=0)
 	title("Overcast")
     } else if (method=="POSOO") {
-	boxplot((mydata[mydata[,"ST"]==60&mydata[,"CM"]>tho,"OBS"]-
+	myres <- boxplot((mydata[mydata[,"ST"]==60&mydata[,"CM"]>tho,"OBS"]-
 	    mydata[mydata[,"ST"]==60&mydata[,"CM"]>tho,"EST"]) ~ 
 	    mydata[mydata[,"ST"]==60&mydata[,"CM"]>tho,"StId"],
 	    xlab="Station",ylab="Observed-Estimated [W/m^2]",
@@ -925,4 +936,5 @@ monhourlyssi <- function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a") 
     if (printIt==TRUE) {
 	dev.off()
     }
+    return(myres)
 }

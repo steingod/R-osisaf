@@ -29,7 +29,7 @@
 # Øystein Godøy, METNO/FOU, 22.11.2010
 # Modified output.
 #
-# ID: $Id: mondailyssi.R,v 1.3 2011-02-09 11:18:27 steingod Exp $
+# ID: $Id: mondailyssi.R,v 1.4 2011-04-07 09:49:58 steingod Exp $
 #
 mondailyssi <- function(filename, method="S",printIt=FALSE) {
 
@@ -46,6 +46,7 @@ mondailyssi <- function(filename, method="S",printIt=FALSE) {
 
     par(pty="s")
 
+    myres <- NULL
     if (method=="S") {
 	xdata <- mydata[,"OBS"]
 	ydata <- mydata[,"EST"]
@@ -92,7 +93,7 @@ mondailyssi <- function(filename, method="S",printIt=FALSE) {
 	mystr<-paste(mystr1,mystr2,mystr3,mystr4,mystr5,mystr6,sep="\n")
 	text(xdata[1],max(ydata,na.rm=T),adj=c(0,1),mystr)
     } else if (method=="POS") {
-	boxplot((mydata[,"OBS"]-mydata[,"EST"]) ~ mydata[,"StId"],
+	myres <- boxplot((mydata[,"OBS"]-mydata[,"EST"]) ~ mydata[,"StId"],
 	    xlab="Station",ylab="Observed-Estimated [W/m^2]",
 	    type="p",las=2)
 	abline(h=c(-50,-25,0,25,50),lty=2, col=c(2,4,1,4,2))
@@ -102,4 +103,5 @@ mondailyssi <- function(filename, method="S",printIt=FALSE) {
     if (printIt==TRUE) {
 	dev.off()
     }
+    return(myres)
 }

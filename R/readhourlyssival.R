@@ -28,14 +28,22 @@
 # NA
 #
 # CVS_ID:
-# $Id: readhourlyssival.R,v 1.2 2011-03-22 09:24:16 steingod Exp $
+# $Id: readhourlyssival.R,v 1.3 2011-04-07 09:49:58 steingod Exp $
 #
-readhourlyssival <- function(file) {
+readhourlyssival <- function(file,format="bioforsk") {
 
-    mydata <- read.table(file,
+    if (format == "bioforsk") {
+        mydata <- read.table(file,
             col.names=
             c("T.sat","EST","NVAL","N","SAT","SOZ","SAZ","RAZ","CM",
                 "T.obs","StId","TTM","OBS","ST"),
             na.strings="-999.00")
+    } else {
+        mydata <- read.table(file,
+            col.names=
+            c("T.sat","EST","NVAL","N","SAT","SOZ","SAZ","RAZ","CM",
+                "T.obs","StId","OBS"),
+            na.strings="-999.00")
+    }
     return(mydata)
 }
