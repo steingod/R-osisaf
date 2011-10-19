@@ -28,8 +28,9 @@
 # Modified placement of statistcs in plot...
 # Øystein Godøy, METNO/FOU, 22.11.2010
 # Modified output.
+# Øystein Godøy, METNO/FOU, 2011-07-13: Corrected typo in column name.
 #
-# ID: $Id: mondailyssi.R,v 1.4 2011-04-07 09:49:58 steingod Exp $
+# ID: $Id: mondailyssi.R,v 1.5 2011-10-19 12:51:50 steingod Exp $
 #
 mondailyssi <- function(filename, method="S",printIt=FALSE) {
 
@@ -82,7 +83,7 @@ mondailyssi <- function(filename, method="S",printIt=FALSE) {
 	mystr1 <- paste("Mean Obs.:",
 	    formatC(mean(mydata[,"OBS"],na.rm=T),format="f",digits=2))
 	mystr2 <- paste("Mean Est.:",
-	    formatC(mean(mydata[,"Est"],na.rm=T),format="f",digits=2))
+	    formatC(mean(mydata[,"EST"],na.rm=T),format="f",digits=2))
 	mystr3 <- paste("Bias:",
 	    formatC(mean(ydata,na.rm=T),format="f",digits=2))
 	mystr4 <- paste("RMSD:",

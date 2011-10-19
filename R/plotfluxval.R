@@ -30,7 +30,7 @@
 # Øystein Godøy, METNO/FOU, 2011-04-01: Added plotting functionality.
 #
 # CVS_ID:
-# $Id: plotfluxval.R,v 1.7 2011-04-07 09:49:58 steingod Exp $
+# $Id: plotfluxval.R,v 1.8 2011-10-19 12:51:50 steingod Exp $
 #
 
 plotfluxval <- function(x,parameter="bias") {
@@ -72,6 +72,7 @@ plotfluxval <- function(x,parameter="bias") {
         myres1 <- procdata(x$OBS,myfactor)
         myres2 <- procdata(x$OBS-x$EST,myfactor,action="sdev")
         myres <- list()
+        myylim <- c(0,50)
         myres$mystations <- myres1$mystations
         tmp <- abs((myres2$data[,2:(length(myres$mystations)+1)]*100)/myres1$data[,2:(length(myres1$mystations)+1)])
         myres$data <- cbind(time=myres1$data[,1],tmp)
