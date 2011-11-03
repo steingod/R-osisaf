@@ -36,7 +36,7 @@ monhourlyssi(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a")
     plotted agains the measurement of minutes of direct insolation at
     the station (STCC).}
     \item{thc}{threshold value for clear sky according to NWCSAF PPS
-    cloudtype}
+    cloudtype. }
     \item{tho}{threshold value for overcast sky according to NWCSAF PPS
     cloudtype}
     \item{printIt}{print to default printer}
@@ -51,5 +51,10 @@ monhourlyssi(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a")
 \note{
     This function is probably of most interest to the development team
     as the validation files are not distributed in any manner.
+
+    During validation observations surrounding a surface station is
+    averaged. Clear sky is identified by 1 and cloudy sky by 2.  The
+    validation files will for every station contain a number between 1 and
+    2 representing the cloud cover.
 }
 \examples{}

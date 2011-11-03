@@ -12,13 +12,14 @@ the library used to generate the products. This function reads the output
 from readosisaf and creates an image on the graphical device used.
 }
 \usage{
-osisafimage(x, layer=1, map=FALSE)  
+osisafimage(x, layer=1, map=FALSE, ...)  
 }
 
 \arguments{
     \item{x}{R object (\link{list}) returned by \link{readosisaf}}
     \item{layer}{The data layer to visualise (1 or higher)}
     \item{map}{logical telling whether coast lines should be added}
+    \item{...}{Additional graphical parameters}
 }
 \value{None}
 

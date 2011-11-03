@@ -1,7 +1,7 @@
 #
-# $Id: osisafimage.R,v 1.2 2011-11-03 09:02:29 steingod Exp $
+# $Id: osisafimage.R,v 1.3 2011-11-03 19:27:16 steingod Exp $
 #
-osisafimage <- function(dataset, layer=1, map=FALSE) {
+osisafimage <- function(dataset, layer=1, map=FALSE, ...) {
 
     if (missing(dataset)) {
 	cat("Remember to provide an object from readosisaf.\n")
@@ -33,10 +33,10 @@ osisafimage <- function(dataset, layer=1, map=FALSE) {
 		asp=aspectratio,
 		plot.axes={axis(1);axis(2);
 		lines(mapdata$eastings,mapdata$northing)},
-		color.palette=topo.colors)
+		color.palette=topo.colors, ...)
     } else {
 	filled.contour(eastings,northings,t[,dataset$header$ysize:1],
-		asp=aspectratio,color.palette=topo.colors)
+		asp=aspectratio,color.palette=topo.colors, ...)
     }
     
     title(paste(dataset$header$description),
