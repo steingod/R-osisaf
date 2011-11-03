@@ -1,6 +1,6 @@
 Package: osisaf
-Version: 0.6
-Date: 2011-04-02
+Version: 0.7
+Date: 2011-11-03
 Title: Useful functions for handling EUMETSAT Ocean and Sea Ice SAF data
 Author: Oystein Godoy <o.godoy@met.no>
 Maintainer: Oystein Godoy <o.godoy@met.no>

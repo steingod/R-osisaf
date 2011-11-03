@@ -11,11 +11,13 @@ Latitude processing center (\url{http://saf.met.no}) are accessed using
 the library used to generate the products (libosihdf5).
 }
 \usage{
-readosisaf(filename,nomiss=TRUE)  
+readosisaf(filename,layers=1,nomiss=TRUE)  
 }
 
 \arguments{
     \item{filename}{file to access}
+    \item{layers}{The number of layers to read out. Defaults to 1 as some
+    products mix datatypes within the layer group}
     \item{nomiss}{missing values are replaced by R NAs}
 }
 \value{Returns a \link{list} with data and metadata. Character strings are

@@ -1,4 +1,7 @@
-osisafimage <- function(dataset, map=FALSE) {
+#
+# $Id: osisafimage.R,v 1.2 2011-11-03 09:02:29 steingod Exp $
+#
+osisafimage <- function(dataset, layer=1, map=FALSE) {
 
     if (missing(dataset)) {
 	cat("Remember to provide an object from readosisaf.\n")
@@ -14,7 +17,7 @@ osisafimage <- function(dataset, map=FALSE) {
     northings <- sort(northings)
 
 
-    t <- matrix(dataset$data,
+    t <- matrix(dataset$data[,layer],
 	    ncol=dataset$header$ysize,nrow=dataset$header$xsize)
 
     aspectratio <- dataset$header$ysize/dataset$header$xsize
@@ -36,7 +39,8 @@ osisafimage <- function(dataset, map=FALSE) {
 		asp=aspectratio,color.palette=topo.colors)
     }
     
-    title(paste("Ocean and Sea Ice SAF",dataset$header$description),
-    sub=paste(dataset$header$year,dataset$header$month,dataset$header$day,sep="-"))
+    title(paste(dataset$header$description),
+    sub=paste(paste(dataset$header$year,formatC(dataset$header$month,width=2,flag="0"),formatC(dataset$header$day,width=2,flag="0"),sep="-"),
+    paste("Layer:",layer),sep="\n"))
 
 }

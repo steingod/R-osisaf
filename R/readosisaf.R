@@ -1,4 +1,13 @@
-readosisaf <- function(filename,nomiss=TRUE) {
+#
+# Read OSISAF HDF5 files.
+# 
+# It is assumed that all fields ahre the same datatype which is not the
+# case for some datasets, thus the default is to read only the first
+# datalayer.
+#
+# $Id: readosisaf.R,v 1.3 2011-11-03 09:02:29 steingod Exp $
+#
+readosisaf <- function(filename,layers=1,nomiss=TRUE) {
 
     if (missing(filename)) {
 	cat("Remember to specify filename\n")
@@ -29,12 +38,18 @@ readosisaf <- function(filename,nomiss=TRUE) {
 	ucs_dx=as.double(ucs_dx),ucs_dy=as.double(ucs_dy),
 	package="osisaf")
 
-    size <- header$xsize*header$ysize
-    mydata <- vector(mode="numeric",length=size)
+    if (layers=="all") {
+        size <- header$xsize*header$ysize
+    } else {
+        size <- layers
+        header$zsize <- layers
+    }
+    #mydata <- vector(mode="numeric",length=size)
+    mydata <- array(0,dim=c(size,header$zsize))
     
     tmp <- .C("readosisafdata",
 	filename=as.character(filename),
-	data=as.numeric(mydata),package="osisaf")
+	data=mydata,package="osisaf")
     if (nomiss) {
 	tmp$data[tmp$data < -50] <- NA
     }
