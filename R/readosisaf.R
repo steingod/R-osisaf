@@ -5,7 +5,7 @@
 # case for some datasets, thus the default is to read only the first
 # datalayer.
 #
-# $Id: readosisaf.R,v 1.3 2011-11-03 09:02:29 steingod Exp $
+# $Id: readosisaf.R,v 1.4 2011-12-11 20:12:55 steingod Exp $
 #
 readosisaf <- function(filename,layers=1,nomiss=TRUE) {
 
@@ -41,7 +41,7 @@ readosisaf <- function(filename,layers=1,nomiss=TRUE) {
     if (layers=="all") {
         size <- header$xsize*header$ysize
     } else {
-        size <- layers
+        size <- header$xsize*header$ysize
         header$zsize <- layers
     }
     #mydata <- vector(mode="numeric",length=size)

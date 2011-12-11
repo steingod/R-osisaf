@@ -19,6 +19,9 @@
 # MODIFIED:
 # NA 
 #
+# ID:
+# $Id: compprocchains.R,v 1.4 2011-12-11 20:12:54 steingod Exp $
+#
 
 compprocchains <- function(chain1,chain2,
 	from=ISOdate(1996,1,1),to=Sys.time(),area=NULL) {
