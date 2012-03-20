@@ -17,7 +17,7 @@
  *
  * Øystein Godøy, METNO/FOU, 2011-11-02: returns all data layers...
  *
- * $Id: readosisafdata.c,v 1.2 2011-11-03 09:02:29 steingod Exp $
+ * $Id: readosisafdata.c,v 1.3 2012-03-20 20:30:43 steingod Exp $
  */
 
 #include <readosisaf.h>
@@ -46,7 +46,7 @@ void readosisafdata(char **infile, double *mymatrix) {
     /*
      * Get the data
      */
-    for (l=0;l<ipd.h.z;l++) {
+    for (l=0;l<1;l++) {
         i = 0;
         for (j=0;j<ipd.h.ih;j++) {
             for (k=0;k<ipd.h.iw;k++) {

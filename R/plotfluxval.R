@@ -30,10 +30,10 @@
 # Øystein Godøy, METNO/FOU, 2011-04-01: Added plotting functionality.
 #
 # CVS_ID:
-# $Id: plotfluxval.R,v 1.8 2011-10-19 12:51:50 steingod Exp $
+# $Id: plotfluxval.R,v 1.9 2012-03-20 20:30:43 steingod Exp $
 #
 
-plotfluxval <- function(x,parameter="bias") {
+plotfluxval <- function(x,parameter="bias",...) {
 
     options(stringsAsFactors=FALSE)
 
