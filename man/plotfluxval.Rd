@@ -12,7 +12,7 @@
 }
 
 \usage{
-    plotfluxval(x,parameter="bias")
+    plotfluxval(x,parameter="bias",stations=NULL,...)
 }
 
 \arguments{
@@ -20,6 +20,9 @@
     \link{readhourlyssival}}
     \item{parameter}{valid values are "bias", "meanobs", "relbias",
     "biassdev", "relbiassdev" and "nobs"}
+    \item{stations}{\link{regexp} string containing station number to use,
+    e.g. "11500|44300|56420"}
+    \item{...}{additional graphical parameters}
 }
 
 \value{

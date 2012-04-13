@@ -30,17 +30,23 @@
 # Øystein Godøy, METNO/FOU, 2011-04-01: Added plotting functionality.
 #
 # CVS_ID:
-# $Id: plotfluxval.R,v 1.9 2012-03-20 20:30:43 steingod Exp $
+# $Id: plotfluxval.R,v 1.10 2012-04-13 22:36:12 steingod Exp $
 #
 
-plotfluxval <- function(x,parameter="bias",...) {
+plotfluxval <- function(x,parameter="bias",stations=NULL, ...) {
 
     options(stringsAsFactors=FALSE)
 
+    if (! is.null(stations)) {
+        tmpx <- x
+        tmpx <- tmpx[grep(stations,tmpx$StId),]
+        x <- tmpx
+    }
+    
     mytime <- strptime(x$T.sat,"%Y%m%d%H%M")
     myfactor <- factor(paste(x$StId,strftime(mytime,"%Y%m"),sep=" "))
     myylim <- NULL
-    
+
     if (parameter=="bias") {
         myparam <- x$OBS-x$EST
         mytitle <- "Mean bias between observed and estimated"

@@ -25,16 +25,16 @@
 # Øystein Godøy, METNO/FOU, 2011-03-11 
 #
 # MODIFIED:
-# NA
+# Øystein Godøy, METNO/FOU, 2012-04-13: Fixed handling of missing values.
 #
 # CVS_ID:
-# $Id: readdailyval.R,v 1.1 2011-04-07 09:49:58 steingod Exp $
+# $Id: readdailyval.R,v 1.2 2012-04-13 22:36:12 steingod Exp $
 #
 readdailyval <- function(file) {
 
     mydata <- read.table(file,
             col.names=
             c("T.sat","EST","NVAL","StId","OBS"),
-            na.strings="-999.00")
+            na.strings="-999.99")
     return(mydata)
 }
