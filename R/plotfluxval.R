@@ -30,7 +30,7 @@
 # Øystein Godøy, METNO/FOU, 2011-04-01: Added plotting functionality.
 #
 # CVS_ID:
-# $Id: plotfluxval.R,v 1.10 2012-04-13 22:36:12 steingod Exp $
+# $Id: plotfluxval.R,v 1.11 2012-04-15 19:13:16 steingod Exp $
 #
 
 plotfluxval <- function(x,parameter="bias",stations=NULL, ...) {
@@ -102,7 +102,7 @@ plotfluxval <- function(x,parameter="bias",stations=NULL, ...) {
     length(myres$mystations)
     xpos <- min(myres$data[,1])
     xpos2 <- max(myres$data[,1]) 
-    if (parameter=="relbias") {
+    if (parameter=="relbias" || parameter=="relbiassdev") {
         ypos <- 50
     } else {
         ypos <- max(myres$data[,2:(length(myres$mystations)+1)],na.rm=T)
