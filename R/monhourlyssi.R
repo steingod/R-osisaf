@@ -64,7 +64,7 @@
 # Øystein Godøy, METNO/FOU, 2011-10-18: Changed boxplot behaviour, and
 # added handling of NOAA-19.
 #
-# ID: $Id: monhourlyssi.R,v 1.6 2011-10-19 12:51:50 steingod Exp $
+# ID: $Id: monhourlyssi.R,v 1.7 2012-08-22 10:50:19 steingod Exp $
 #
 monhourlyssi <-
 function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk") {
@@ -194,7 +194,7 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
     } else if (method=="DSAT") {
 	#plot(mydata[,"SAT"],mydata[,"OBS"]-mydata[,"EST"],
 	#    xlab="Satellite",ylab="Observed-Estimated [W/m^2]",type="p")
-        boxplot(mydata[,"OBS"]-mydata[,"EST"] ~ mydata[,"SAT"],
+        myres <- boxplot(mydata[,"OBS"]-mydata[,"EST"] ~ mydata[,"SAT"],
                 xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
 	abline(0,0)
 	mystr15 <- paste("NOAA-15 | Mean:",
@@ -233,24 +233,6 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 	    "N:",
 	    length(mydata[mydata[,"SAT"]=="NOAA-16","OBS"])
 	)
-	mystr17 <- paste("NOAA-17 | Mean:",
-	    formatC(mean(
-		mydata[mydata[,"SAT"]=="NOAA-17","OBS"]
-		    -mydata[mydata[,"SAT"]=="NOAA-17","EST"],na.rm=T),
-		format="f",digits=2),
-	    "Median:",
-	    formatC(median(
-		mydata[mydata[,"SAT"]=="NOAA-17","OBS"]
-		    -mydata[mydata[,"SAT"]=="NOAA-17","EST"],na.rm=T),
-		format="f",digits=2),
-	    "SD:",
-	    formatC(sd(
-		mydata[mydata[,"SAT"]=="NOAA-17","OBS"]
-		    -mydata[mydata[,"SAT"]=="NOAA-17","EST"],na.rm=T),
-		format="f",digits=2),
-	    "N:",
-	    length(mydata[mydata[,"SAT"]=="NOAA-17","OBS"])
-	)
 	mystr18 <- paste("NOAA-18 | Mean:",
 	    formatC(mean(
 		mydata[mydata[,"SAT"]=="NOAA-18","OBS"]
@@ -287,14 +269,32 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 	    "N:",
 	    length(mydata[mydata[,"SAT"]=="NOAA-19","OBS"])
 	)
-	mystr<-paste(mystr15,mystr16,mystr17,mystr18,mystr19,sep="\n")
+	mystr02 <- paste("MetOp02 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="METOP02","OBS"]
+		    -mydata[mydata[,"SAT"]=="METOP02","EST"],na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="METOP02","OBS"]
+		    -mydata[mydata[,"SAT"]=="METOP02","EST"],na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="METOP02","OBS"]
+		    -mydata[mydata[,"SAT"]=="METOP02","EST"],na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="METOP02","OBS"])
+	)
+	mystr<-paste(mystr15,mystr16,mystr02,mystr18,mystr19,sep="\n")
 	text(0.5, min(mydata[,"OBS"]-mydata[,"EST"],na.rm=T),adj=c(0,0),mystr)
 	title("All situations")
     } else if (method=="DSATO") { # Overcast
 #	plot(mydata[mydata[,"ST"]==0,"SAT"],
 #	    mydata[mydata[,"ST"]==0,"OBS"]-mydata[mydata[,"ST"]==0,"EST"],
 #	    xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
-        boxplot(mydata[mydata[,"ST"]==0,"OBS"]-mydata[mydata[,"ST"]==0,"EST"]~mydata[mydata[,"ST"]==0,"SAT"],
+        myres <- boxplot(mydata[mydata[,"ST"]==0,"OBS"]-mydata[mydata[,"ST"]==0,"EST"]~mydata[mydata[,"ST"]==0,"SAT"],
         xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
 	abline(0,0)
 	mystr15 <- paste("NOAA-15 | Mean:",
@@ -339,27 +339,6 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 	    "N:",
 	    length(mydata[mydata[,"SAT"]=="NOAA-16"&mydata[,"ST"]==0,"OBS"])
 	)
-	mystr17 <- paste("NOAA-17 | Mean:",
-	    formatC(mean(
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0,"OBS"]
-		    -mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0,"EST"],
-		    na.rm=T),
-		format="f",digits=2),
-	    "Median:",
-	    formatC(median(
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0,"OBS"]
-		    -mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0,"EST"],
-		    na.rm=T),
-		format="f",digits=2),
-	    "SD:",
-	    formatC(sd(
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0,"OBS"]
-		    -mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0,"EST"],
-		    na.rm=T),
-		format="f",digits=2),
-	    "N:",
-	    length(mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0,"OBS"])
-	)
 	mystr18 <- paste("NOAA-18 | Mean:",
 	    formatC(mean(
 		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"OBS"]
@@ -381,28 +360,49 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 	    "N:",
 	    length(mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"OBS"])
 	)
-	mystr19 <- paste("NOAA-18 | Mean:",
+	mystr19 <- paste("NOAA-19 | Mean:",
 	    formatC(mean(
-		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"OBS"]
-		    -mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"EST"],
+		mydata[mydata[,"SAT"]=="NOAA-19"&mydata[,"ST"]==0,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-19"&mydata[,"ST"]==0,"EST"],
 		    na.rm=T),
 		format="f",digits=2),
 	    "Median:",
 	    formatC(median(
-		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"OBS"]
-		    -mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"EST"],
+		mydata[mydata[,"SAT"]=="NOAA-19"&mydata[,"ST"]==0,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-19"&mydata[,"ST"]==0,"EST"],
 		    na.rm=T),
 		format="f",digits=2),
 	    "SD:",
 	    formatC(sd(
-		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"OBS"]
-		    -mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"EST"],
+		mydata[mydata[,"SAT"]=="NOAA-19"&mydata[,"ST"]==0,"OBS"]
+		    -mydata[mydata[,"SAT"]=="NOAA-19"&mydata[,"ST"]==0,"EST"],
 		    na.rm=T),
 		format="f",digits=2),
 	    "N:",
-	    length(mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0,"OBS"])
+	    length(mydata[mydata[,"SAT"]=="NOAA-19"&mydata[,"ST"]==0,"OBS"])
 	)
-	mystr <- paste(mystr15,mystr16,mystr17,mystr18,mystr19,sep="\n")
+	mystr02 <- paste("METOP02 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==0,"OBS"]
+		    -mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==0,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==0,"OBS"]
+		    -mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==0,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==0,"OBS"]
+		    -mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==0,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==0,"OBS"])
+	)
+	mystr <- paste(mystr15,mystr16,mystr02,mystr18,mystr19,sep="\n")
 	text(0.5, min(mydata[mydata[,"ST"]==0,"OBS"]-
 	    mydata[mydata[,"ST"]==0,"EST"],na.rm=T),adj=c(0,0),mystr)
 	title("Overcast situations only (ST=0)")
@@ -410,7 +410,7 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 #	plot(mydata[mydata[,"ST"]==60,"SAT"],
 #	    mydata[mydata[,"ST"]==60,"OBS"]-mydata[mydata[,"ST"]==60,"EST"],
 #	    xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
-        boxplot(mydata[mydata[,"ST"]==60,"OBS"]-mydata[mydata[,"ST"]==60,"EST"]~mydata[mydata[,"ST"]==60,"SAT"],xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
+        myres <- boxplot(mydata[mydata[,"ST"]==60,"OBS"]-mydata[mydata[,"ST"]==60,"EST"]~mydata[mydata[,"ST"]==60,"SAT"],xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
 	abline(0,0)
 	mystr15 <- paste("NOAA-15 | Mean:",
 	    formatC(mean(
@@ -454,27 +454,6 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 	    "N:",
 	    length(mydata[mydata[,"SAT"]=="NOAA-16"&mydata[,"ST"]==60,"OBS"])
 	)
-	mystr17 <- paste("NOAA-17 | Mean:",
-	    formatC(mean(
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60,"OBS"]
-		    -mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60,"EST"],
-		    na.rm=T),
-		format="f",digits=2),
-	    "Median:",
-	    formatC(median(
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60,"OBS"]
-		    -mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60,"EST"],
-		    na.rm=T),
-		format="f",digits=2),
-	    "SD:",
-	    formatC(sd(
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60,"OBS"]
-		    -mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60,"EST"],
-		    na.rm=T),
-		format="f",digits=2),
-	    "N:",
-	    length(mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60,"OBS"])
-	)
 	mystr18 <- paste("NOAA-18 | Mean:",
 	    formatC(mean(
 		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==60,"OBS"]
@@ -517,7 +496,28 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 	    "N:",
 	    length(mydata[mydata[,"SAT"]=="NOAA-19"&mydata[,"ST"]==60,"OBS"])
 	)
-	mystr <- paste(mystr15,mystr16,mystr17,mystr18,mystr19,sep="\n")
+	mystr02 <- paste("METOP02 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60,"OBS"]
+		    -mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60,"OBS"]
+		    -mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60,"OBS"]
+		    -mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60,"EST"],
+		    na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60,"OBS"])
+	)
+	mystr <- paste(mystr15,mystr16,mystr02,mystr18,mystr19,sep="\n")
 	text(0.5, min(mydata[mydata[,"ST"]==60,"OBS"]
 	    -mydata[mydata[,"ST"]==60,"EST"],na.rm=T),adj=c(0,0),mystr)
 	title("Clear sky situations only (ST=60)")
@@ -526,7 +526,7 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 #	    mydata[mydata[,"ST"]==0&mydata[,"CM"]>tho,"OBS"]
 #		-mydata[mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],
 #	    xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
-        boxplot(mydata[mydata[,"ST"]==0&mydata[,"CM"]>tho,"OBS"]
+        myres <- boxplot(mydata[mydata[,"ST"]==0&mydata[,"CM"]>tho,"OBS"]
 		-mydata[mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"]~mydata[mydata[,"ST"]==0&mydata[,"CM"]>tho,"SAT"],xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
 	abline(0,0)
 	mystr15 <- paste("NOAA-15 | Mean:",
@@ -573,28 +573,6 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 	    length(mydata[mydata[,"SAT"]=="NOAA-16"&mydata[,"ST"]==0&
 		mydata[,"CM"]>tho,"OBS"])
 	)
-	mystr17 <- paste("NOAA-17 | Mean:",
-	    formatC(mean(
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0&
-		mydata[,"CM"]>tho,"OBS"]-mydata[mydata[,"SAT"]=="NOAA-17"&
-		mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
-		format="f",digits=2),
-	    "Median:",
-	    formatC(median(
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0&
-		mydata[,"CM"]>tho,"OBS"]-mydata[mydata[,"SAT"]=="NOAA-17"&
-		mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
-		format="f",digits=2),
-	    "SD:",
-	    formatC(sd(
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0&
-		mydata[,"CM"]>tho,"OBS"]-mydata[mydata[,"SAT"]=="NOAA-17"&
-		mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
-		format="f",digits=2),
-	    "N:",
-	    length(mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==0&
-		mydata[,"CM"]>tho,"OBS"])
-	)
 	mystr18 <- paste("NOAA-18 | Mean:",
 	    formatC(mean(
 		mydata[mydata[,"SAT"]=="NOAA-18"&mydata[,"ST"]==0&
@@ -639,7 +617,29 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 	    length(mydata[mydata[,"SAT"]=="NOAA-19"&mydata[,"ST"]==0&
 		mydata[,"CM"]>tho,"OBS"])
 	)
-	mystr<-paste(mystr15,mystr16,mystr17,mystr18,mystr19,sep="\n")
+	mystr02 <- paste("METOP02 | Mean:",
+	    formatC(mean(
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==0&
+		mydata[,"CM"]>tho,"OBS"]-mydata[mydata[,"SAT"]=="METOP02"&
+		mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "Median:",
+	    formatC(median(
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==0&
+		mydata[,"CM"]>tho,"OBS"]-mydata[mydata[,"SAT"]=="METOP02"&
+		mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "SD:",
+	    formatC(sd(
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==0&
+		mydata[,"CM"]>tho,"OBS"]-mydata[mydata[,"SAT"]=="METOP02"&
+		mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
+		format="f",digits=2),
+	    "N:",
+	    length(mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==0&
+		mydata[,"CM"]>tho,"OBS"])
+	)
+	mystr<-paste(mystr15,mystr16,mystr02,mystr18,mystr19,sep="\n")
 	text(0.5, min(mydata[mydata[,"ST"]==0&mydata[,"CM"]>tho,"OBS"]-
 	    mydata[mydata[,"ST"]==0&mydata[,"CM"]>tho,"EST"],na.rm=T),
 	    adj=c(0,0),mystr)
@@ -651,7 +651,7 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 #	    -mydata[
 #	    mydata[,"ST"]==60&mydata[,"CM"]<thc,"EST"],
 #	    xlab="Satellite",ylab="Observed-Estimated [W/m^2]")
-        boxplot(mydata[
+        myres <- boxplot(mydata[
 	    mydata[,"ST"]==60&mydata[,"CM"]<thc,"OBS"]
 	    -mydata[
 	    mydata[,"ST"]==60&mydata[,"CM"]<thc,"EST"]~mydata[mydata[,"ST"]==60&mydata[,"CM"]<thc,"SAT"],
@@ -707,29 +707,29 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 	    length(mydata[mydata[,"SAT"]=="NOAA-16"&mydata[,"ST"]==60&
 	    mydata[,"CM"]<thc&mydata[,"CM"]>0,"OBS"])
 	)
-	mystr17 <- paste("NOAA-17 | Mean:",
+	mystr02 <- paste("METOP02 | Mean:",
 	    formatC(mean(
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60&
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60&
 		mydata[,"CM"]<thc,"OBS"]-
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60&
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60&
 		mydata[,"CM"]<thc,"EST"],na.rm=T),
 		format="f",digits=2),
 	    "Median:",
 	    formatC(median(
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60&
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60&
 		mydata[,"CM"]<thc,"OBS"]-
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60&
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60&
 		mydata[,"CM"]<thc,"EST"],na.rm=T),
 		format="f",digits=2),
 	    "SD:",
 	    formatC(sd(
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60&
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60&
 		mydata[,"CM"]<thc,"OBS"]-
-		mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60&
+		mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60&
 		mydata[,"CM"]<thc,"EST"],na.rm=T),
 		format="f",digits=2),
 	    "N:",
-	    length(mydata[mydata[,"SAT"]=="NOAA-17"&mydata[,"ST"]==60&
+	    length(mydata[mydata[,"SAT"]=="METOP02"&mydata[,"ST"]==60&
 	    mydata[,"CM"]<thc,"OBS"])
 	)
 	mystr18 <- paste("NOAA-18 | Mean:",
@@ -782,7 +782,7 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
 	    length(mydata[mydata[,"SAT"]=="NOAA-19"&mydata[,"ST"]==60&
 	    mydata[,"CM"]<thc&mydata[,"CM"]>0,"OBS"])
 	)
-	mystr<-paste(mystr15,mystr16,mystr17,mystr18,mystr19,sep="\n")
+	mystr<-paste(mystr15,mystr16,mystr02,mystr18,mystr19,sep="\n")
 	text(0.5, min(mydata[mydata[,"ST"]==60&mydata[,"CM"]<thc&
 	    mydata[,"CM"]>0,"OBS"]-mydata[mydata[,"ST"]==60&mydata[,"CM"]<thc&
 	    mydata[,"CM"]>0,"EST"],na.rm=T),adj=c(0,0),mystr)
