@@ -18,6 +18,8 @@
     is \code{StId}. No specific reference to whether the object contains
     SSI or DLI is currently added. The user has to keep track of this
     himself.
+
+    Missing values are coded.
 }
 
 \usage{
