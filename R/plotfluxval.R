@@ -30,7 +30,7 @@
 # Øystein Godøy, METNO/FOU, 2011-04-01: Added plotting functionality.
 #
 # CVS_ID:
-# $Id: plotfluxval.R,v 1.11 2012-04-15 19:13:16 steingod Exp $
+# $Id: plotfluxval.R,v 1.12 2012-10-27 20:48:13 steingod Exp $
 #
 
 plotfluxval <- function(x,parameter="bias",stations=NULL, ...) {
@@ -43,7 +43,7 @@ plotfluxval <- function(x,parameter="bias",stations=NULL, ...) {
         x <- tmpx
     }
     
-    mytime <- strptime(x$T.sat,"%Y%m%d%H%M")
+    mytime <- strptime(x$T.sat,"%Y%m%d%H%M",tz="GMT")
     myfactor <- factor(paste(x$StId,strftime(mytime,"%Y%m"),sep=" "))
     myylim <- NULL
 
@@ -93,6 +93,7 @@ plotfluxval <- function(x,parameter="bias",stations=NULL, ...) {
     matplot(myres$data[,1],myres$data[,2:(length(myres$mystations)+1)],
     type="p", ylab=myylab,xlab="",xaxt="n",pch=1:length(myres$mystations),
     col=1:length(myres$mystations),ylim=myylim)
+    myres$data[,1] <- ISOdatetime(1970,1,1,0,0,0,tz="GMT")+myres$data[,1]
     axis.POSIXct(1,myres$data[,1],at=myres$data[,1],labels=strftime(myres$data[,1],"%Y-%m"),las=1,cex.axis=0.8)
     if (parameter=="bias") {
         abline(h=0)
@@ -148,7 +149,7 @@ procdata <- function(x, myfactor, action="mean") {
     }
     tmp <- myres3
     myres3 <- as.data.frame(tmp)
-    myres3[,1] <- as.numeric(strptime(paste(mymonths,"15",sep=""),"%Y%m%d"))
+    myres3[,1] <- as.numeric(strptime(paste(mymonths,"15",sep=""),"%Y%m%d",tz="GMT"))
     myres3[,2:(length(mystations)+1)] <- data.matrix(myres3[,2:(length(mystations)+1)])
 
     return(list(data=myres3,mystations=mystations))

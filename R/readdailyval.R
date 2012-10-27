@@ -28,7 +28,7 @@
 # Øystein Godøy, METNO/FOU, 2012-04-13: Fixed handling of missing values.
 #
 # CVS_ID:
-# $Id: readdailyval.R,v 1.3 2012-10-27 09:03:57 steingod Exp $
+# $Id: readdailyval.R,v 1.4 2012-10-27 20:48:14 steingod Exp $
 #
 readdailyval <- function(file) {
 
@@ -37,6 +37,5 @@ readdailyval <- function(file) {
             c("T.sat","EST","NVAL","StId","OBS"),
             na.strings="-999.99")
 
-    mydata$T.sat <- strptime(mydata$T.sat,"%Y%m%d%H%M",tz="GMT")
     return(mydata)
 }
