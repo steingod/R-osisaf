@@ -1,8 +1,8 @@
-\name{osisafmapdata}
+\name{LMLMSGmap}
 \docType{data}
-\alias{osisafmapdata}
+\alias{LMLMSGmap}
 
-\title{GSHHS Low Resolution Coastlines}
+\title{GSHHS Low Resolution Coastlines for Polar data}
 
 \description{
     GSHHS - A Global Self-consistent, Hierarchical, High-resolution
@@ -20,19 +20,18 @@
     provided by the National Geophysical Data Center of NOAA Satellite and
     Information Service. The original dataset contains lakes, islands
     within lakes etc. This dataset contain only the coastlines.
+
+    The object presented here is based upon the gshhs_c file and is
+    suitable for MSG products, not being too detailed.
 }
 
 \usage{
-    data(osisafmapdata)
+    data(LMLMSGmap)
 }
 
 \format{
-    A \link{data.frame} containing two elements, latitude (lat) and
-    longitude (lon) in decimal degrees.
-}
-
-\note{
-    Obsolete, use \link{LMLMSGmap} or \link{HLPOLARmap} instead.
+    This object is created using \link{getRgshhsMap} from package
+    \link{maptools}. The object returned is a \link{sp} object.
 }
 
 \source{

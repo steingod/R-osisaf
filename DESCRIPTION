@@ -1,15 +1,16 @@
 Package: osisaf
-Version: 0.7
-Date: 2011-11-03
+Version: 0.8
+Date: 2013-03-21
 Title: Useful functions for handling EUMETSAT Ocean and Sea Ice SAF data
 Author: Oystein Godoy <o.godoy@met.no>
 Maintainer: Oystein Godoy <o.godoy@met.no>
 Depends: 
 Imports:
-Suggests: 
+Suggests: sp, maptools
 Description: The EUMETSAT OSISAF High Latitude processing facility provides 
   satellite derived products for sea ice, SST and radiative fluxes. This
   package provides an R-interface for accessing the products in NCSA HDF5
   format and basic statistics, interpretation of these.
 License: GPL version 2 or newer
 URL: http://www.r-project.org, http://saf.met.no
+LazyLoad: true
