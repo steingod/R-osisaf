@@ -64,7 +64,7 @@
 # Øystein Godøy, METNO/FOU, 2011-10-18: Changed boxplot behaviour, and
 # added handling of NOAA-19.
 #
-# ID: $Id: monhourlyssi.R,v 1.8 2012-10-30 11:01:06 steingod Exp $
+# ID: $Id: monhourlyssi.R,v 1.9 2013-08-22 09:44:33 steingod Exp $
 #
 monhourlyssi <-
 function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk") {
@@ -83,6 +83,14 @@ function(file,method="S",printIt=FALSE,thc=1.1,tho=1.9,sat="a",format="bioforsk"
                     "T.obs","StId","TTM","OBS","ST"),
                 na.strings="-999.00")
     }
+    mydata[mydata[,"SAT"]=="noaa15","SAT"] <- "NOAA-15"
+    mydata[mydata[,"SAT"]=="noaa16","SAT"] <- "NOAA-16"
+    mydata[mydata[,"SAT"]=="noaa17","SAT"] <- "NOAA-17"
+    mydata[mydata[,"SAT"]=="noaa18","SAT"] <- "NOAA-18"
+    mydata[mydata[,"SAT"]=="noaa19","SAT"] <- "NOAA-19"
+    mydata[mydata[,"SAT"]=="MetOP-01","SAT"] <- "MetOp01"
+    mydata[mydata[,"SAT"]=="MetOP-02","SAT"] <- "MetOp02"
+    mydata[mydata[,"SAT"]=="metop02","SAT"] <- "MetOp02"
 
     if (printIt==TRUE) {
 	postscript(paper="special",width=8,height=8,onefile=F,horizontal=F)
