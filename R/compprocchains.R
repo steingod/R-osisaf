@@ -17,10 +17,10 @@
 # Øystein Godøy, METNO/FOU, 18.05.2006 
 #
 # MODIFIED:
-# NA 
+# Øystein Godøy, METNO/FOU, 2013-08-26: Corrected time zone dependency. 
 #
 # ID:
-# $Id: compprocchains.R,v 1.5 2013-08-22 09:44:33 steingod Exp $
+# $Id: compprocchains.R,v 1.6 2013-08-26 13:19:51 steingod Exp $
 #
 
 compprocchains <- function(chain1,chain2,
@@ -116,7 +116,7 @@ compprocchains <- function(chain1,chain2,
     }
     cat("All products are collected now, preparing results and plots\n")
 
-    mtimes <- ISOdatetime(1970,1,1,0,0,0)+mtimes_tmp
+    mtimes <- ISOdatetime(1970,1,1,0,0,0,tz="GMT")+mtimes_tmp
 
     plot(mtimes,mvalues,type="b",ylab=myylab,xlab="")
     abline(h=0)
