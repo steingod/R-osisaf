@@ -29,7 +29,7 @@
     and the actual product. Origo for the UCS is at the North Pole.
 }
 
-\note {
+\note{
     Input data are currently not well defined and updates of this function
     is to be expected.
 }

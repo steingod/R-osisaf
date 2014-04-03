@@ -17,14 +17,14 @@ utilised by the development team.
 \details{
 \tabular{ll}{
 Package: \tab osisaf\cr
-Version: \tab 0.2\cr
-Date: \tab 2007-01-24\cr
+Version: \tab 0.9\cr
+Date: \tab 2014-03-28\cr
 Depends: \tab \cr
 Imports: \tab \cr
 Suggests: \tab \cr
 License: \tab GPL version 2 or newer\cr
 URL: \tab http://www.r-project.org, http://saf.met.no\cr
-Built: \tab R 2.3.1; i686-redhat-linux-gnu; 2006-10-02 12:10:01; unix\cr
+Built: \tab R 3.0.2\cr
 }
 
 Index:
